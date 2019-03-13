@@ -37,18 +37,19 @@ for(i in seq(1, 100, 1)) {
                                    with.Rindels = TRUE,
                                    max.Rmismatch = i)
   
-  out_girafe <- trimAdapter(fq, adapter, match.score = i)
-  
   outlist_indels[[i]] <- summarize_extern(out_indels, bed, 150)
   outlist_not_indels[[i]] <- summarize_extern(out_not_indels, bed, 150)
   outlist_girafe[[i]] <- summarize_extern(out_girafe, bed, 150)
   
 }
 
+out_girafe <- trimAdapter(fq, adapter)
+outlist_girafe <- summarize_extern(out_girafe, bed, 150)
+
 outlist_indels <- do.call("rbind", outlist_indels)
 outlist_not_indels <- do.call("rbind", outlist_not_indels)
-outlist_girafe <- do.call("rbind", outlist_girafe)
 
 outlist_indels
 outlist_not_indels
 outlist_girafe
+
