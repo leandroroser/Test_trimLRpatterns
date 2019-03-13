@@ -2,7 +2,7 @@
 library(ShortRead)
 
 fq <- readFastq("fq_example.fastq")
-bed  <- read.table("bed_example.txt")
+bed  <- read.table("bed_example.txt", header = TRUE)
 bed <- as(bed, "GRanges")
 
 adapter <-  DNAString("AGATCGGAAGAGCACACGTCTGAACTCCAGTCACACAGTGATCTCGTATGCCGTCTTCTGCTTG")
@@ -37,5 +37,5 @@ summarize_extern <- function(out, bed, readlen) {
   
   outlist <- do.call("rbind", outlist)
   
-  
+  outlist
   
