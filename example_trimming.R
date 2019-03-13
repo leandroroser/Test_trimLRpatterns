@@ -4,7 +4,7 @@ library(ShortRead)
 fq <- readFastq("fq_example.fastq")
 bed  <- read.table("bed_example.txt", header = TRUE)
 bed <- as(bed, "GRanges")
-
+  
 adapter <-  DNAString("AGATCGGAAGAGCACACGTCTGAACTCCAGTCACACAGTGATCTCGTATGCCGTCTTCTGCTTG")
 
 # summary of sensibility, specificity, positive predictive value, negative predictive value, Matthews correlation 
@@ -19,17 +19,19 @@ summarize_extern <- function(out, bed, readlen) {
                   SPC = TN / (FP + TN),
                   PPV =  TP / (TP + FP), 
                   NVP = TN/(TN+FN), 
-                  MCC = ((TP * TN) - (FP  * FN))/ sqrt((TP + FN) * (TP + FN) * (TN + FP) + (TN + FN)))
+                  MCC = ((TP * TN) - (FP  * FN))/ sqrt((TP + FP) * (TP + FN) * (TN + FP) * (TN + FN)))
   
   outlist
   
 }
 
   outlist <- list()
-  for(i in seq(1, 50, 1)) {
-    out <- trimLRPatterns(subject=fq, 
+  for(i in seq(1, 100, 1)) {
+    out <- trimLRPatterns(subject=fq, Rfixed = FALSE,
                           Rpattern = adapter,
-                          with.Rindels = FALSE, 
+                          with.Rindels = TRUE, 
+                          with.Lindels = TRUE,
+                            
                           max.Rmismatch = i)
     
     outlist[[i]] <-summarize_extern(out, bed, 150)
