@@ -1,4 +1,5 @@
 
+library(ShortRead)
 
 fq <- readFastq("fq_example.fastq")
 bed  <- read.table("bed_example.txt")
