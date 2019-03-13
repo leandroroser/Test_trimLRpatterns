@@ -1,4 +1,5 @@
 library(ShortRead)
+library(girafe)
 
 fq <- readFastq("fq_example.fastq")
 bed  <- read.table("bed_example.txt", header = TRUE)
@@ -24,7 +25,7 @@ summarize_extern <- function(out, bed, readlen) {
   
 }
 
-outlist_indels <- outlist_not_indels <- outlist_giraffe <- list()
+outlist_indels <- outlist_not_indels <- outlist_girafe <- list()
 for(i in seq(1, 100, 1)) {
   out_indels <- trimLRPatterns(subject = fq, 
                                Rpattern = adapter,
@@ -36,18 +37,18 @@ for(i in seq(1, 100, 1)) {
                                    with.Rindels = TRUE,
                                    max.Rmismatch = i)
   
-  out_giraffe <- trimAdapter(fq, adapter, match.score = i)
+  out_girafe <- trimAdapter(fq, adapter, match.score = i)
   
   outlist_indels[[i]] <- summarize_extern(out_indels, bed, 150)
   outlist_not_indels[[i]] <- summarize_extern(out_not_indels, bed, 150)
-  outlist_giraffe[[i]] <- summarize_extern(out_giraffe, bed, 150)
+  outlist_girafe[[i]] <- summarize_extern(out_girafe, bed, 150)
   
 }
 
 outlist_indels <- do.call("rbind", outlist_indels)
 outlist_not_indels <- do.call("rbind", outlist_not_indels)
-outlist_giraffe <- do.call("rbind", outlist_giraffe)
+outlist_girafe <- do.call("rbind", outlist_girafe)
 
 outlist_indels
 outlist_not_indels
-outlist_giraffe
+outlist_girafe
