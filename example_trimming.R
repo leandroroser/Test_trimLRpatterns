@@ -30,17 +30,16 @@ for(i in seq(1, 100, 1)) {
   out_indels <- trimLRPatterns(subject = fq, 
                                Rpattern = adapter,
                                with.Rindels = TRUE,
-                               max.Rmismatch = i)
+                               max.Rmismatch = i/100)
   
   out_not_indels <- trimLRPatterns(subject = fq, 
                                    Rpattern = adapter,
-                                   with.Rindels = TRUE,
-                                   max.Rmismatch = i)
+                                   with.Rindels = FALSE,
+                                   max.Rmismatch = i/100)
   
   outlist_indels[[i]] <- summarize_extern(out_indels, bed, 150)
   outlist_not_indels[[i]] <- summarize_extern(out_not_indels, bed, 150)
   outlist_girafe[[i]] <- summarize_extern(out_girafe, bed, 150)
-  
 }
 
 out_girafe <- trimAdapter(fq, adapter)
